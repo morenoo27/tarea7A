@@ -30,6 +30,7 @@ public class Main {
 
         leerFichero(listaEmpleados);
 
+        System.out.println("Todos los empelados leidos, profcedemos a mostrarlso por consola:");
         //mostramos todos los empleados
         for (Trabajador empleado : listaEmpleados) {
             System.out.println(empleado.toString());
