@@ -18,7 +18,7 @@ public class Trabajador {
     private String nombreCompleto;
     private String dni;
     private String telefono;
-    private String puesto;
+    private TipoPuesto puesto;
     private LocalDate posesion;
     private LocalDate cese;
     private boolean evaluador; //   si = true   no = false
@@ -49,11 +49,11 @@ public class Trabajador {
         this.telefono = telefono;
     }
 
-    public String getPuesto() {
+    public TipoPuesto getPuesto() {
         return puesto;
     }
 
-    public void setPuesto(String puesto) {
+    public void setPuesto(TipoPuesto puesto) {
         this.puesto = puesto;
     }
 
@@ -104,6 +104,6 @@ public class Trabajador {
             coord = "Si";
         }
 
-        return nombreCompleto + "," + dni + "," + puesto + "," + posesion + "," + cese + "," + telefono + "," + eval + "," + coord;
+        return nombreCompleto + "," + dni + "," + puesto.getNombre() + "," + posesion + "," + cese + "," + telefono + "," + eval + "," + coord;
     }
 }
