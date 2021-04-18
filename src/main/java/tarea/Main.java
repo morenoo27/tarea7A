@@ -178,18 +178,9 @@ public class Main {
 //              cada uno de los empleados
                 tmp.setNombreCompleto(concat(tokens[0], tokens[1]));
                 tmp.setDni(refactor(tokens[2]));
-                /*
-                SI SE QUISIERA REALIZAR CON LA CALSE ENUM, EN VEZ DE SER CON EL
-                METODO "refactor" SOLO SERIA DE LA SIGUIENTE MANERA:
                 tmp.setPuesto(puesto(refactor(tokens[3])));
-                */
-                tmp.setPuesto(refactor(tokens[3]));
-//              Para controlar que no haya fallos, si uno de esto campos es null
-//              no se molesta el programa en realizar el set
-                fechaPosesion = fecha(tokens[4]);
-                tmp.setPosesion(fechaPosesion);
-                fechaCese = fecha(tokens[5]);
-                tmp.setCese(fechaCese);
+                tmp.setPosesion(fecha(tokens[4]));
+                tmp.setCese(fecha(tokens[5]));
                 tmp.setTelefono(refactor(tokens[6]));
                 tmp.setEvaluador(conversionBoolean(refactor(tokens[7])));
                 tmp.setCoordinador(conversionBoolean(refactor(tokens[8])));
