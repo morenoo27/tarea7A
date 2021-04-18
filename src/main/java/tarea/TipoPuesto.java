@@ -20,6 +20,7 @@ public enum TipoPuesto {
     MATEMATICAS("Matemáticas P.E.S."),
     COVID("Area Científico-Tecnolog. (Apoyo Covid)"),
     RELIGION("Contr. Lab. Religión (Sec-Ere)"),
+    RELIGIONCOMPLETA("Laboral Religión (Sec-Ere) Jor.Completa"),
     TECNOLOGIA("Tecnología P.E.S."),
     GEOGRAFIAHISTORIA("Geografía e Historia P.E.S."),
     LENGUA("Lengua Castellana y Literatura P.E.S."),
@@ -39,6 +40,11 @@ public enum TipoPuesto {
     CULTURACLASICA("Cultura Clásica P.E.S."),
     ORIENTACION("Orientación Educativa P.E.S."),
     FILOSOFIA("Filosofía P.E.S."),
+    PEDAGOGIA("Pedagogía Terapeutica Eso"),
+    APLICACIONESINFORMATICAS("Sistemas y Aplic. Informáticos P.T.F.P."),
+    EQUIPOSELECTRONICOS("Equipos Electrónicos P.T.F.P."),
+    MUSICA("Música P.E.S."),
+    SIGNOS("Audición y Lenguaje Eso. (Signos)"),
     FRANCES("Francés P.E.S.");
 
     //solamente tendremos como parametro el nombre
@@ -66,28 +72,35 @@ public enum TipoPuesto {
 
         ArrayList<TipoPuesto> lista = new ArrayList<>();
 
-        lista.add(TipoPuesto.ADE);
-        lista.add(TipoPuesto.AREALENGUA);
-        lista.add(TipoPuesto.BIOLOGIAGEOLOGIA);
-        lista.add(TipoPuesto.COVID);
-        lista.add(TipoPuesto.DIBUJO);
-        lista.add(TipoPuesto.ECONOMIA);
-        lista.add(TipoPuesto.EDUCACIONFISICA);
-        lista.add(TipoPuesto.FILOSOFIA);
-        lista.add(TipoPuesto.FISICAQUIMICA);
-        lista.add(TipoPuesto.FOL);
-        lista.add(TipoPuesto.FRANCES);
-        lista.add(TipoPuesto.GEOGRAFIAHISTORIA);
-        lista.add(TipoPuesto.GESTION);
-        lista.add(TipoPuesto.INFORMATICA);
-        lista.add(TipoPuesto.INGLES);
-        lista.add(TipoPuesto.LABORATORIO);
-        lista.add(TipoPuesto.LENGUA);
-        lista.add(TipoPuesto.MATEMATICAS);
-        lista.add(TipoPuesto.ORIENTACION);
-        lista.add(TipoPuesto.RELIGION);
-        lista.add(TipoPuesto.SISTEMASELECTRICOS);
-        lista.add(TipoPuesto.TECNOLOGIA);
+        lista.add(ADE);
+        lista.add(AREALENGUA);
+        lista.add(APLICACIONESINFORMATICAS);
+        lista.add(BIOLOGIAGEOLOGIA);
+        lista.add(COVID);
+        lista.add(CULTURACLASICA);
+        lista.add(DIBUJO);
+        lista.add(ECONOMIA);
+        lista.add(EDUCACIONFISICA);
+        lista.add(EQUIPOSELECTRONICOS);
+        lista.add(FILOSOFIA);
+        lista.add(FISICAQUIMICA);
+        lista.add(FOL);
+        lista.add(FRANCES);
+        lista.add(GEOGRAFIAHISTORIA);
+        lista.add(GESTION);
+        lista.add(INFORMATICA);
+        lista.add(INGLES);
+        lista.add(LABORATORIO);
+        lista.add(LENGUA);
+        lista.add(MATEMATICAS);
+        lista.add(MUSICA);
+        lista.add(ORIENTACION);
+        lista.add(PEDAGOGIA);
+        lista.add(RELIGION);
+        lista.add(RELIGIONCOMPLETA);
+        lista.add(SIGNOS);
+        lista.add(SISTEMASELECTRICOS);
+        lista.add(TECNOLOGIA);
 
         return lista;
     }
