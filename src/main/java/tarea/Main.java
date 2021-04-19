@@ -1,4 +1,3 @@
-
 package tarea;
 
 import java.io.BufferedWriter;
@@ -9,9 +8,12 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * Clase principal en la que realizamos el ejercicio en si. El ejercicio
@@ -25,8 +27,11 @@ public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
 
-        //creamos al lista en la que vamosa a almacenar cada uno de los objetos
+        //creamos las listas en la que vamosa a almacenar cada uno de los objetos
         ArrayList<Trabajador> listaEmpleados = new ArrayList<>();
+        ArrayList<Trabajador> informatica = new ArrayList<>();
+        ArrayList<Trabajador> biologiaCoord = new ArrayList<>();
+        ArrayList<Trabajador> nifN = new ArrayList<>();
 
         System.out.println(LocalDate.now());
         leerFichero(listaEmpleados);
@@ -39,14 +44,147 @@ public class Main {
         });
 
         escribirEnFichero(listaEmpleados);
-        
-        
+
 //      AMPLIACION EJERCICIO
         //damos un poco de espacio en al consola
         System.out.println();
+        System.out.println("-------AMPLIACION EJERCICIO---------");
+
+//      APARTADO A
+//      PUNTO 1:
+//      Contar el número de profesores de Informática.
+        System.out.println("------------------PUNTO 1-----------------");
         System.out.println();
-        
-        
+
+//      Recorremos toda la lista y cuando veamos uno que sea profesor de informatica
+//      sumaremos uno al contador
+        for (Trabajador empleado : listaEmpleados) {
+            if (empleado.getPuesto().equals(TipoPuesto.INFORMATICA)) {
+                informatica.add(empleado);
+            }
+        }
+
+//      Mostramos cuantos profesores de informatica hay y los mostramos
+        System.out.println("Hay " + informatica.size() + " profesores de informatica");
+        for (Trabajador trabajador : informatica) {
+            System.out.println(trabajador.toString());
+        }
+
+//      PUNTO 2:
+//      Saber si algún profesor/a de Biología es también coordinador.
+        System.out.println();
+        System.out.println("------------------PUNTO 2-----------------");
+        System.out.println();
+
+//      Mismo procedimiento que el anterior, pero esta vez la condicion es que
+//      sea profesor de Biologia y coordinador
+        for (Trabajador trabajador : listaEmpleados) {
+            if (trabajador.getPuesto().equals(TipoPuesto.BIOLOGIAGEOLOGIA) && trabajador.isCoordinador()) {
+                biologiaCoord.add(trabajador);
+            }
+        }
+
+        System.out.println("Hay " + biologiaCoord.size() + " profesores de biologia que son coordinadores");
+        for (Trabajador trabajador : biologiaCoord) {
+            System.out.println(trabajador.toString());
+        }
+
+//      PUNTO 3:
+//      Obtener una lista ordenada alfabéticamente con todos los apellidos de 
+//      los empleados cuyo NIF contenga la letra N.
+        System.out.println();
+        System.out.println("------------------PUNTO 3-----------------");
+        System.out.println();
+
+        for (Trabajador empleado : listaEmpleados) {
+            if (empleado.getNif().contains("N")) {
+                nifN.add(empleado);
+            }
+        }
+
+        //ordenamos por apellidos
+        Collections.sort(nifN, (e1, e2) -> e1.getApellidos().compareTo(e2.getApellidos()));
+
+        for (Trabajador trabajador : nifN) {
+            System.out.println(trabajador.getApellidos() + "," + trabajador.getNombre()
+                    + "\t" + trabajador.getNif());
+        }
+
+//      PUNTO 4:
+//      Verificar que ningún profesor se llama "Jonh".
+        System.out.println();
+        System.out.println("------------------PUNTO 4-----------------");
+        System.out.println();
+
+        Trabajador jonh = new Trabajador();
+        boolean Jonh = false;
+
+        for (Trabajador empleado : listaEmpleados) {
+            if (empleado.getNombre().contains("Jonh")) {
+                Jonh = true;
+                jonh = empleado;
+                break;
+            }
+        }
+
+        if (Jonh) {
+            System.out.println("Si hay alguien que se llama Jonh");
+        } else {
+            System.out.println("No hay nadie que se llama Jonh");
+        }
+
+//      APARTADO B
+        System.out.println();
+        System.out.println();
+//      PUNTO 1:
+//      Contar el número de profesores de Informática. CON API
+        System.out.println("------------------PUNTO 1-----------------");
+        System.out.println();
+
+        List<Trabajador> linformatica = buscarprofesoresInformaticos(listaEmpleados);
+        System.out.println("Hay " + linformatica.size() + " profesores de informatica");
+        linformatica.forEach(trabajador -> {
+            System.out.println(trabajador.toString());
+        });
+
+//      PUNTO 2:
+//      Saber si algún profesor/a de Biología es también coordinador. CON API
+        System.out.println();
+        System.out.println("------------------PUNTO 2-----------------");
+        System.out.println();
+        List<Trabajador> lBioCoord = buscarProfesoresBioCoord(listaEmpleados);
+        System.out.println("Hay " + lBioCoord.size() + " profesores de biologia que son coordinadores");
+        lBioCoord.forEach(trabajador -> {
+            System.out.println(trabajador.toString());
+        });
+
+//      PUNTO 3:
+//      Obtener una lista ordenada alfabéticamente con todos los apellidos de 
+//      los empleados cuyo NIF contenga la letra N. CON API
+        System.out.println();
+        System.out.println("------------------PUNTO 3-----------------");
+        System.out.println();
+
+        List<Trabajador> listaDNIN = buscarN(listaEmpleados);
+        listaDNIN.forEach(trabajador -> {
+            System.out.println(trabajador.getApellidos() + "," + trabajador.getNombre()
+                    + "\t" + trabajador.getNif());
+        });
+
+//      PUNTO 4:
+//      Verificar que ningún profesor se llama "Jonh". CON API
+        System.out.println();
+        System.out.println("------------------PUNTO 4-----------------");
+        System.out.println();
+
+        Jonh = buscarJonh(listaEmpleados);
+
+        if (Jonh) {
+            System.out.println("Si hay alguien que se llama Jonh");
+        } else {
+            System.out.println("No hay nadie que se llama Jonh");
+        }
+
     }
 
     /**
@@ -100,11 +238,11 @@ public class Main {
      * @return Fecha de tipo LocalDate con el formato español
      */
     public static LocalDate fecha(String token) {
-        
+
         if (token.equals("")) {
             return null;
         }
-        
+
         LocalDate fecha = LocalDate.parse(token, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
         return fecha;
@@ -124,23 +262,24 @@ public class Main {
 
     /**
      * Como por medio tenemos una coma, el nombre se divide en 2. Por lo que
-     * vamos a coger ambas cadenas y unirlas y foramtearlas para que salga el
-     * nombre completo de m,anera correcta
+     * vamos a coger ambas cadenas y foramtearlas para que salga el nombre
+     * completo de manera correcta
      *
      * @param token1 Cadena de texto sin formatear
      * @param token2 Cadena de texto sin formatear
      * @return Cadena de texto unida y formateada a gusto propio
      */
-    private static String concat(String token1, String token2) {
+    private static Trabajador concat(Trabajador tmp, String token1, String token2) {
 
         String apellidos = token1.substring(1);//quitamos la primera comilla
 
         //quitamos la ultima comilla y el espacio
         String nombre = token2.substring(1, token2.length() - 1);
 
-        String nombreCompleto = nombre + " " + apellidos;
+        tmp.setNombre(nombre);
+        tmp.setApellidos(apellidos);
 
-        return nombreCompleto;
+        return tmp;
     }
 
     /**
@@ -182,10 +321,12 @@ public class Main {
 //              Instanciamos un objeto de tipo Trabajador
                 Trabajador tmp = new Trabajador();
 
+//              Establecemos el nombre y el apellido
+                tmp = concat(tmp, tokens[0], tokens[1]);
+
 //              Ahora lo que hacemos es usar los setters de la clase para crear
 //              cada uno de los empleados
-                tmp.setNombreCompleto(concat(tokens[0], tokens[1]));
-                tmp.setDni(refactor(tokens[2]));
+                tmp.setNif(refactor(tokens[2]));
                 tmp.setPuesto(puesto(refactor(tokens[3])));
                 tmp.setPosesion(fecha(refactor(tokens[4])));
                 tmp.setCese(fecha(refactor(tokens[5])));
@@ -213,7 +354,7 @@ public class Main {
 
 //          Escribimos en la primera linea el titulo de cada una de las celdas
 //          y una nueva linea (cada vez quie escribamos)
-            flujo.write("Empleado/a,DNI/Pasaporte,Puesto,Fecha de toma de posesión,Fecha de cese,Teléfono,Evaluador,Coordinador");
+            flujo.write("Nombre,Apellidos,DNI/Pasaporte,Puesto,Fecha de toma de posesión,Fecha de cese,Teléfono,Evaluador,Coordinador");
 
             flujo.newLine();
 
@@ -235,17 +376,101 @@ public class Main {
     }
 
     /**
-     * Metodo para saber si un empleado lleva trabajando mas de 20 años.
-     * Tenemos que controlar tambien que miremos si nuestro empleado ha sido 
-     * despedido ya que aunques de 20, ya no esta trabajando en este momento
+     * Metodo para saber si un empleado lleva trabajando mas de 20 años. Tenemos
+     * que controlar tambien que miremos si nuestro empleado ha sido despedido
+     * ya que aunques de 20, ya no esta trabajando en este momento
      *
      * @param empleado Objeto tipo Trabajador
-     * @return true mas de 20    false menos de 20
+     * @return true mas de 20 false menos de 20
      */
     private static boolean isMayorDe20(Trabajador empleado) {
-        if (empleado.getCese() != null){
+        if (empleado.getCese() != null) {
             return false;
         }
         return empleado.getPosesion().isBefore(LocalDate.now().minusYears(20));
+    }
+
+    /**
+     * Metodo para almacenar en una lista todos los profesores que estan
+     * especializados en el campo de la Informatica usando el metodo .stream en
+     * una lista con empleados
+     * Para este ultimo metodo realizamos las siguientes acciones:
+     *      .filter para buscar solo aquellos que sean informaticos
+     *      .collect para guardar todos los que cumplan la accion/acciones
+     *          anteriores en la lista
+     *
+     * @param listaEmpleados Lista de todos los empeleados
+     * @return Lista con los profesores informaticos
+     */
+    private static List<Trabajador> buscarprofesoresInformaticos(ArrayList<Trabajador> listaEmpleados) {
+        List<Trabajador> listaInformaticos = listaEmpleados.stream()
+                .filter(empleado -> empleado.getPuesto() == TipoPuesto.INFORMATICA)
+                .collect(Collectors.toList());
+
+        return listaInformaticos;
+    }
+
+    /**
+     * Metodo para buscar todos los profesores, de una lista de empleados, que
+     * son, ademas de profesores especializados en el campo de biologia,
+     * cordinador
+     * Para ello realizamos las siguientes operaciones:
+     *      .filter para buscar solo aquellos que sean biologos y coordinadores
+     *      .collect para guardar todos los que cumplan la accion/acciones
+     *          anteriores en la lista
+     *
+     * @param listaEmpleados Lista de todos los empeleados
+     * @return Lista con los biologos que son coordinadores
+     */
+    private static List<Trabajador> buscarProfesoresBioCoord(ArrayList<Trabajador> listaEmpleados) {
+        List<Trabajador> biologosCoordinadores = listaEmpleados.stream()
+                .filter(empleado -> empleado.getPuesto() == TipoPuesto.BIOLOGIAGEOLOGIA && empleado.isCoordinador())
+                .collect(Collectors.toList());
+
+        return biologosCoordinadores;
+    }
+
+    /**
+     * Metodo para ordenar por apellidos los empleado que tengan una N en su nif.
+     * Para ello creamos una lista a partir de la lista global donde estan todos
+     * los empleados y realizamos las siguientes operaciones:
+     *      .filter para buscar lso nif que tengan N
+     *      .sorted apra ordenar por apellidos la lista
+     *      .collect para guardar todos los que cumplan la accion/acciones
+     *          anteriores en la lista
+     *
+     * @param listaEmpleados Lista de todos los empeleados
+     * @return Lista ordenada por apellidos de los empleados que tengan una N en
+     * su nif
+     */
+    private static List<Trabajador> buscarN(ArrayList<Trabajador> listaEmpleados) {
+        List<Trabajador> EmpleadosConN = listaEmpleados.stream()
+                .filter(empleado -> empleado.getNif().contains("N"))
+                .sorted((e1, e2) -> e1.getApellidos().compareTo(e2.getApellidos()))
+                .collect(Collectors.toList());
+
+        return EmpleadosConN;
+    }
+
+    /**
+     * Metodo para buscar si algun empleado tiene un nombre especifico, en este
+     * caso se trata del nombre de Jonh.
+     * Para ello creamos una lista a partir de la lista global donde estan todos
+     * los empleados y realizamos las siguientes operaciones:
+     *      .filter para la condicion de que algun nombre sea igual a "Jonh"
+     *      .collect para guardar todos los que cumplan la accion/acciones
+     *          anteriores en la lista
+     *
+     * @param listaEmpleados Lista de todos los empeleados
+     * @return Si la lista esta vacia devolvera false(ya que no habra nadie que
+     * se llame Jonh), si devuleve true es por que se ha almacenado almenos una
+     * persona con el nomnre de Jonh
+     */
+    private static boolean buscarJonh(ArrayList<Trabajador> listaEmpleados) {
+        List<Trabajador> Jonh = listaEmpleados.stream()
+                .filter(empleado -> empleado.getNombre().equals("Jonh"))
+                .collect(Collectors.toList());
+
+        return !Jonh.isEmpty();
     }
 }
