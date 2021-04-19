@@ -16,8 +16,9 @@ import java.time.format.DateTimeFormatter;
  */
 public class Trabajador {
 
-    private String nombreCompleto;
-    private String dni;
+    private String nombre;
+    private String apellidos;
+    private String nif;
     private String telefono;
     private TipoPuesto puesto;
     private LocalDate posesion;
@@ -26,20 +27,28 @@ public class Trabajador {
     private boolean coordinador;//   si = true   no = false
 
 //  GETTERS & SETTERS
-    public String getNombreCompleto() {
-        return nombreCompleto;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getDni() {
-        return dni;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public String getNif() {
+        return nif;
+    }
+
+    public void setNif(String nif) {
+        this.nif = nif;
     }
 
     public String getTelefono() {
@@ -108,9 +117,9 @@ public class Trabajador {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         if (this.cese == null) {
-            return nombreCompleto + "," + dni + "," + puesto.getNombre() + "," + posesion.format(formato) + "," + cese + "," + telefono + "," + eval + "," + coord;
+            return nombre + "," + apellidos + "," + nif + "," + puesto.getNombre() + "," + posesion.format(formato) + "," + cese + "," + telefono + "," + eval + "," + coord;
         } else {
-            return nombreCompleto + "," + dni + "," + puesto.getNombre() + "," + posesion.format(formato) + "," + cese.format(formato) + "," + telefono + "," + eval + "," + coord;
+            return nombre + "," + apellidos + "," + nif + "," + puesto.getNombre() + "," + posesion.format(formato) + "," + cese.format(formato) + "," + telefono + "," + eval + "," + coord;
         }
         
     }
