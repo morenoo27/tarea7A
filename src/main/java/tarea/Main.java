@@ -28,15 +28,25 @@ public class Main {
         //creamos al lista en la que vamosa a almacenar cada uno de los objetos
         ArrayList<Trabajador> listaEmpleados = new ArrayList<>();
 
+        System.out.println(LocalDate.now());
         leerFichero(listaEmpleados);
 
         System.out.println("Todos los empelados leidos, profcedemos a mostrarlso por consola:");
         //mostramos todos los empleados
-        for (Trabajador empleado : listaEmpleados) {
+        //cambio a expresion lambda
+        listaEmpleados.forEach(empleado -> {
             System.out.println(empleado.toString());
-        }
+        });
 
         escribirEnFichero(listaEmpleados);
+        
+        
+//      AMPLIACION EJERCICIO
+        //damos un poco de espacio en al consola
+        System.out.println();
+        System.out.println();
+        
+        
     }
 
     /**
@@ -91,14 +101,11 @@ public class Main {
      */
     public static LocalDate fecha(String token) {
         
-        //quitamos todos los caracteres que no necesitamos
-        String tmp = token.replace("\"", "");
-        
-        if (tmp.equals("")) {
+        if (token.equals("")) {
             return null;
         }
-        LocalDate fecha = LocalDate.parse(tmp, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        
+        LocalDate fecha = LocalDate.parse(token, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
         return fecha;
     }
@@ -180,8 +187,8 @@ public class Main {
                 tmp.setNombreCompleto(concat(tokens[0], tokens[1]));
                 tmp.setDni(refactor(tokens[2]));
                 tmp.setPuesto(puesto(refactor(tokens[3])));
-                tmp.setPosesion(fecha(tokens[4]));
-                tmp.setCese(fecha(tokens[5]));
+                tmp.setPosesion(fecha(refactor(tokens[4])));
+                tmp.setCese(fecha(refactor(tokens[5])));
                 tmp.setTelefono(refactor(tokens[6]));
                 tmp.setEvaluador(conversionBoolean(refactor(tokens[7])));
                 tmp.setCoordinador(conversionBoolean(refactor(tokens[8])));
@@ -228,12 +235,17 @@ public class Main {
     }
 
     /**
-     * Metodo para saber si un empleado lleva trabajando mas de 20 años
+     * Metodo para saber si un empleado lleva trabajando mas de 20 años.
+     * Tenemos que controlar tambien que miremos si nuestro empleado ha sido 
+     * despedido ya que aunques de 20, ya no esta trabajando en este momento
      *
      * @param empleado Objeto tipo Trabajador
-     * @return true mas de(o igual) 20 false menos de 20
+     * @return true mas de 20    false menos de 20
      */
     private static boolean isMayorDe20(Trabajador empleado) {
-        return LocalDate.now().getYear() - empleado.getPosesion().getYear() >= 20;
+        if (empleado.getCese() != null){
+            return false;
+        }
+        return empleado.getPosesion().isBefore(LocalDate.now().minusYears(20));
     }
 }
