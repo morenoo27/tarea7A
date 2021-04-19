@@ -2,6 +2,7 @@
 package tarea;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Una clase POJO (Plain Old Java Object) Un POJO es una instancia de una clase
@@ -103,7 +104,14 @@ public class Trabajador {
         if (this.coordinador) {
             coord = "Si";
         }
+        
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        return nombreCompleto + "," + dni + "," + puesto.getNombre() + "," + posesion + "," + cese + "," + telefono + "," + eval + "," + coord;
+        if (this.cese == null) {
+            return nombreCompleto + "," + dni + "," + puesto.getNombre() + "," + posesion.format(formato) + "," + cese + "," + telefono + "," + eval + "," + coord;
+        } else {
+            return nombreCompleto + "," + dni + "," + puesto.getNombre() + "," + posesion.format(formato) + "," + cese.format(formato) + "," + telefono + "," + eval + "," + coord;
+        }
+        
     }
 }
