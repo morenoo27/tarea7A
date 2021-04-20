@@ -148,7 +148,7 @@ public class Main {
         System.out.println();
         System.out.println("------------------PUNTO 2-----------------");
         System.out.println();
-        
+
         System.out.println(buscarProfesoresBioCoord(listaEmpleados));
 
 //      PUNTO 3:
@@ -168,7 +168,7 @@ public class Main {
         System.out.println();
         System.out.println("------------------PUNTO 4-----------------");
         System.out.println();
-        
+
         if (buscarJonh(listaEmpleados)) {
             System.out.println("No hay nadie que se llama Jonh");
         } else {
@@ -177,15 +177,17 @@ public class Main {
 
     }
 
-    /**
+    /** <html>
+     *      <pre>
      * Como cada uno de las divisiones vana a estar con comillas, creamos un
      * metodo para quitar esas comillas usando el metodo de la clase String
-     * "substring". Si al cadena esta vacia, se devolvera una cadena que dira
-     * que no hay datos.
-     *
+     * "substring". 
+     * Si al cadena esta vacia, se devolvera una cadena que dira que no hay datos.
+     *      </pre>
      * @param token Division con comiilas de la linea del archivo que estamos
      * leyendo
      * @return cadena de caracteres sin comillas
+     *  </html>
      */
     private static String refactor(String token) {
 
@@ -197,13 +199,17 @@ public class Main {
         }
     }
 
-    /**
+    /** <html>
+     *      <pre>
      * Metodo para determianr que tipo de puesto de trabajo tiene el objeto en
-     * cuestion. Para ello usaremos el metodo equals o contains
+     * cuestion. 
+     *      Para ello usaremos el metodo equals o contains
+     *      </pre>
      *
      * @param token Division sin comiilas de la linea del archivo que estamos
      * leyendo
-     * @return TipoPuesto correspondiente
+     * @return TipoPuesto correspondiente. Si no encuentra el puesto, devuelve null
+     *  </html>
      */
     private static TipoPuesto puesto(String token) {
 
@@ -219,13 +225,16 @@ public class Main {
         return null;
     }
 
-    /**
+    /** <html>
+     *      <pre>
      * Metodo para convertir una cadean de String a un objeto de tipo LocalDate
      * con el formato de dia/mes/año
+     *      </pre>
      *
      * @param token Division sin comiilas de la linea del archivo que estamos
      * leyendo
      * @return Fecha de tipo LocalDate con el formato español
+     *  </html>
      */
     public static LocalDate fecha(String token) {
 
@@ -238,26 +247,32 @@ public class Main {
         return fecha;
     }
 
-    /**
+    /** <html>
+     *      <pre>
      * Metodo para convertir el String en un booleano. Si el texto es si
      * devolvera true y si es no devolvera false
+     *      </pre>
      *
      * @param token Division sin comiilas de la linea del archivo que estamos
      * leyendo
      * @return booleano correspondiente
+     *  </html>
      */
     private static boolean conversionBoolean(String token) {
         return !token.equalsIgnoreCase("no");
     }
 
-    /**
+    /** <html>
+     *      <pre>
      * Como por medio tenemos una coma, el nombre se divide en 2. Por lo que
      * vamos a coger ambas cadenas y foramtearlas para que salga el nombre
      * completo de manera correcta
+     *      </pre>
      *
      * @param token1 Cadena de texto sin formatear
      * @param token2 Cadena de texto sin formatear
      * @return Cadena de texto unida y formateada a gusto propio
+     *  </html>
      */
     private static Trabajador concat(Trabajador tmp, String token1, String token2) {
 
@@ -272,13 +287,16 @@ public class Main {
         return tmp;
     }
 
-    /**
+    /** <html>
+     *      <pre>
      * Metodo en el que leeremos el archivo en cuestion y, por medio de crear un
      * objeto de tipo Trabajador y los setters de la clase, iremos leyendo cada
      * linea, troceandola en partes dependiendo del elemento de separaacionlo,
      * iremos aniadiendo a una lista variable
+     *      </pre>
      *
      * @param listaEmpleados Lista en la que añadiremos los empleados
+     *  </html>
      */
     private static void leerFichero(ArrayList<Trabajador> listaEmpleados) {
 
@@ -331,10 +349,11 @@ public class Main {
         }
     }
 
-    /**
+    /**<html>
      * Metodo para escribir en un nuevo fichero a traves del Objeto BufferWriter
      *
      * @param listaEmpleados Lista de los empleados
+     *  </html>
      */
     private static void escribirEnFichero(ArrayList<Trabajador> listaEmpleados) {
 
@@ -365,13 +384,15 @@ public class Main {
         }
     }
 
-    /**
-     * Metodo para saber si un empleado lleva trabajando mas de 20 años. Tenemos
-     * que controlar tambien que miremos si nuestro empleado ha sido despedido
-     * ya que aunques de 20, ya no esta trabajando en este momento
-     *
+    /** <html>
+     *      <pre>
+     * Metodo para saber si un empleado lleva trabajando mas de 20 años.
+     * Tenemos que controlar tambien que miremos si nuestro empleado ha sido 
+     * despedido, ya que aunque de 20, ya no esta trabajando en este momento
+     *      </pre>
      * @param empleado Objeto tipo Trabajador
      * @return true mas de 20 false menos de 20
+     *  </html>
      */
     private static boolean isMayorDe20(Trabajador empleado) {
         if (empleado.getCese() != null) {
@@ -380,7 +401,8 @@ public class Main {
         return empleado.getPosesion().isBefore(LocalDate.now().minusYears(20));
     }
 
-    /**
+    /** <html>
+     * <pre>
      * Metodo para almacenar en una lista todos los profesores que estan
      * especializados en el campo de la Informatica usando el metodo .stream en
      * una lista con empleados
@@ -388,9 +410,11 @@ public class Main {
      *      .filter para buscar solo aquellos que sean informaticos
      *      .collect para guardar todos los que cumplan la accion/acciones
      *          anteriores en la lista
+     * </pre>
      *
      * @param listaEmpleados Lista de todos los empeleados
      * @return numero de profesores que son informaticos
+     * </html>
      */
     private static long buscarprofesoresInformaticos(ArrayList<Trabajador> listaEmpleados) {
         return listaEmpleados.stream()
@@ -398,16 +422,19 @@ public class Main {
                 .count();
     }
 
-    /**
+    /** <html>
+     * <pre>
      * Metodo para buscar todos los profesores, de una lista de empleados, que
      * son, ademas de profesores especializados en el campo de biologia,
      * cordinador
      * Para ello realizamos las siguientes operaciones:
      *      .filter para buscar solo aquellos que sean biologos y coordinadores
      *      .count cuenta cuantos objetos hay en el stream
+     * </pre>
      *
      * @param listaEmpleados Lista de todos los empeleados
      * @return Lista con los biologos que son coordinadores
+     * </html>
      */
     private static boolean buscarProfesoresBioCoord(ArrayList<Trabajador> listaEmpleados) {
         /*
@@ -416,24 +443,27 @@ public class Main {
         .anyMatch(empleado -> empleado.getPuesto() == TipoPuesto.BIOLOGIAGEOLOGIA && empleado.isCoordinador());
         y devolver el boolean
         en mi caso no ya que al devolver long no serviria
-        */
+         */
 
         return listaEmpleados.stream()
                 .anyMatch(empleado -> empleado.getPuesto() == TipoPuesto.BIOLOGIAGEOLOGIA && empleado.isCoordinador());
     }
 
-    /**
+    /** <html>
+     * <pre>
      * Metodo para ordenar por apellidos los empleado que tengan una N en su nif.
      * Para ello creamos una lista a partir de la lista global donde estan todos
      * los empleados y realizamos las siguientes operaciones:
      *      .filter para buscar lso nif que tengan N
-     *      .map para coger solamente 
+     *      .map para coger solamente los apellidos de cada empleado
      *      .collect para guardar todos los que cumplan la accion/acciones
      *          anteriores en la lista
+     * </pre>
      *
      * @param listaEmpleados Lista de todos los empeleados
      * @return Lista ordenada por apellidos de los empleados que tengan una N en
      * su nif
+     * </html>
      */
     private static List<String> buscarN(ArrayList<Trabajador> listaEmpleados) {
         return listaEmpleados.stream()
@@ -442,16 +472,20 @@ public class Main {
                 .collect(Collectors.toList());
     }
 
-    /**
+    /** <html>
+     * <pre>
      * Metodo para buscar si algun empleado tiene un nombre especifico, en este
      * caso se trata del nombre de Jonh.
      * Para ello creamos una lista a partir de la lista global donde estan todos
      * los empleados y realizamos las siguientes operaciones:
      *      .noneMatch me dice si no hay nadie que cumpla la condicion
+     * </pre>
+     *
      *
      * @param listaEmpleados Lista de todos los empeleados
      * @return si devuelve true, nadie cumple esa condicion, si devuelve false
      * hay almenos uno que si la cumple
+     * </html>
      */
     private static boolean buscarJonh(ArrayList<Trabajador> listaEmpleados) {
         return listaEmpleados.stream()
