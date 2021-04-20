@@ -141,22 +141,15 @@ public class Main {
         System.out.println("------------------PUNTO 1-----------------");
         System.out.println();
 
-        List<Trabajador> linformatica = buscarprofesoresInformaticos(listaEmpleados);
-        System.out.println("Hay " + linformatica.size() + " profesores de informatica");
-        linformatica.forEach(trabajador -> {
-            System.out.println(trabajador.toString());
-        });
+        System.out.println("Hay " + buscarprofesoresInformaticos(listaEmpleados) + " profesores de informatica");
 
 //      PUNTO 2:
 //      Saber si algún profesor/a de Biología es también coordinador. CON API
         System.out.println();
         System.out.println("------------------PUNTO 2-----------------");
         System.out.println();
-        List<Trabajador> lBioCoord = buscarProfesoresBioCoord(listaEmpleados);
-        System.out.println("Hay " + lBioCoord.size() + " profesores de biologia que son coordinadores");
-        lBioCoord.forEach(trabajador -> {
-            System.out.println(trabajador.toString());
-        });
+        
+        System.out.println(buscarProfesoresBioCoord(listaEmpleados));
 
 //      PUNTO 3:
 //      Obtener una lista ordenada alfabéticamente con todos los apellidos de 
@@ -165,10 +158,9 @@ public class Main {
         System.out.println("------------------PUNTO 3-----------------");
         System.out.println();
 
-        List<Trabajador> listaDNIN = buscarN(listaEmpleados);
-        listaDNIN.forEach(trabajador -> {
-            System.out.println(trabajador.getApellidos() + "," + trabajador.getNombre()
-                    + "\t" + trabajador.getNif());
+        List<String> listaDNIN = buscarN(listaEmpleados);
+        listaDNIN.forEach(apellido -> {
+            System.out.println(apellido);
         });
 
 //      PUNTO 4:
@@ -176,13 +168,11 @@ public class Main {
         System.out.println();
         System.out.println("------------------PUNTO 4-----------------");
         System.out.println();
-
-        Jonh = buscarJonh(listaEmpleados);
-
-        if (Jonh) {
-            System.out.println("Si hay alguien que se llama Jonh");
-        } else {
+        
+        if (buscarJonh(listaEmpleados)) {
             System.out.println("No hay nadie que se llama Jonh");
+        } else {
+            System.out.println("Si hay alguien que se llama Jonh");
         }
 
     }
@@ -400,14 +390,12 @@ public class Main {
      *          anteriores en la lista
      *
      * @param listaEmpleados Lista de todos los empeleados
-     * @return Lista con los profesores informaticos
+     * @return numero de profesores que son informaticos
      */
-    private static List<Trabajador> buscarprofesoresInformaticos(ArrayList<Trabajador> listaEmpleados) {
-        List<Trabajador> listaInformaticos = listaEmpleados.stream()
+    private static long buscarprofesoresInformaticos(ArrayList<Trabajador> listaEmpleados) {
+        return listaEmpleados.stream()
                 .filter(empleado -> empleado.getPuesto() == TipoPuesto.INFORMATICA)
-                .collect(Collectors.toList());
-
-        return listaInformaticos;
+                .count();
     }
 
     /**
@@ -416,18 +404,22 @@ public class Main {
      * cordinador
      * Para ello realizamos las siguientes operaciones:
      *      .filter para buscar solo aquellos que sean biologos y coordinadores
-     *      .collect para guardar todos los que cumplan la accion/acciones
-     *          anteriores en la lista
+     *      .count cuenta cuantos objetos hay en el stream
      *
      * @param listaEmpleados Lista de todos los empeleados
      * @return Lista con los biologos que son coordinadores
      */
-    private static List<Trabajador> buscarProfesoresBioCoord(ArrayList<Trabajador> listaEmpleados) {
-        List<Trabajador> biologosCoordinadores = listaEmpleados.stream()
-                .filter(empleado -> empleado.getPuesto() == TipoPuesto.BIOLOGIAGEOLOGIA && empleado.isCoordinador())
-                .collect(Collectors.toList());
+    private static boolean buscarProfesoresBioCoord(ArrayList<Trabajador> listaEmpleados) {
+        /*
+        Otra manera mucho mas eficaz:
+        boolean haybiologosCoordinadores = listaEmpleados.stream()
+        .anyMatch(empleado -> empleado.getPuesto() == TipoPuesto.BIOLOGIAGEOLOGIA && empleado.isCoordinador());
+        y devolver el boolean
+        en mi caso no ya que al devolver long no serviria
+        */
 
-        return biologosCoordinadores;
+        return listaEmpleados.stream()
+                .anyMatch(empleado -> empleado.getPuesto() == TipoPuesto.BIOLOGIAGEOLOGIA && empleado.isCoordinador());
     }
 
     /**
@@ -435,7 +427,7 @@ public class Main {
      * Para ello creamos una lista a partir de la lista global donde estan todos
      * los empleados y realizamos las siguientes operaciones:
      *      .filter para buscar lso nif que tengan N
-     *      .sorted apra ordenar por apellidos la lista
+     *      .map para coger solamente 
      *      .collect para guardar todos los que cumplan la accion/acciones
      *          anteriores en la lista
      *
@@ -443,13 +435,11 @@ public class Main {
      * @return Lista ordenada por apellidos de los empleados que tengan una N en
      * su nif
      */
-    private static List<Trabajador> buscarN(ArrayList<Trabajador> listaEmpleados) {
-        List<Trabajador> EmpleadosConN = listaEmpleados.stream()
+    private static List<String> buscarN(ArrayList<Trabajador> listaEmpleados) {
+        return listaEmpleados.stream()
                 .filter(empleado -> empleado.getNif().contains("N"))
-                .sorted((e1, e2) -> e1.getApellidos().compareTo(e2.getApellidos()))
+                .map(empleado -> empleado.getApellidos())
                 .collect(Collectors.toList());
-
-        return EmpleadosConN;
     }
 
     /**
@@ -457,20 +447,14 @@ public class Main {
      * caso se trata del nombre de Jonh.
      * Para ello creamos una lista a partir de la lista global donde estan todos
      * los empleados y realizamos las siguientes operaciones:
-     *      .filter para la condicion de que algun nombre sea igual a "Jonh"
-     *      .collect para guardar todos los que cumplan la accion/acciones
-     *          anteriores en la lista
+     *      .noneMatch me dice si no hay nadie que cumpla la condicion
      *
      * @param listaEmpleados Lista de todos los empeleados
-     * @return Si la lista esta vacia devolvera false(ya que no habra nadie que
-     * se llame Jonh), si devuleve true es por que se ha almacenado almenos una
-     * persona con el nomnre de Jonh
+     * @return si devuelve true, nadie cumple esa condicion, si devuelve false
+     * hay almenos uno que si la cumple
      */
     private static boolean buscarJonh(ArrayList<Trabajador> listaEmpleados) {
-        List<Trabajador> Jonh = listaEmpleados.stream()
-                .filter(empleado -> empleado.getNombre().equals("Jonh"))
-                .collect(Collectors.toList());
-
-        return !Jonh.isEmpty();
+        return listaEmpleados.stream()
+                .noneMatch(empleado -> empleado.getNombre().equals("Jonh"));
     }
 }
