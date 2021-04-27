@@ -179,7 +179,7 @@ public class Main {
 
     /** <html>
      *      <pre>
-     * Como cada uno de las divisiones vana a estar con comillas, creamos un
+     * Como cada uno de las divisiones van a estar con comillas, creamos un
      * metodo para quitar esas comillas usando el metodo de la clase String
      * "substring". 
      * Si al cadena esta vacia, se devolvera una cadena que dira que no hay datos.
@@ -418,7 +418,7 @@ public class Main {
      */
     private static long buscarprofesoresInformaticos(ArrayList<Trabajador> listaEmpleados) {
         return listaEmpleados.stream()
-                .filter(empleado -> empleado.getPuesto() == TipoPuesto.INFORMATICA)
+                .filter(empleado -> empleado.getPuesto().equals(TipoPuesto.INFORMATICA))
                 .count();
     }
 
